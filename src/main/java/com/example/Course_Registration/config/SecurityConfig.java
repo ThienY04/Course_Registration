@@ -28,19 +28,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // 1. TẮT CSRF để không bị lỗi 403 Forbidden nữa
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth -> auth
-                        // 2. Cho phép truy cập các trang này mà không cần login
                         .requestMatchers("/login", "/register", "/css/**", "/js/**").permitAll()
                         .anyRequest().authenticated())
 
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/home", true) // Nếu login thành công sẽ vào đây
-                        .failureUrl("/login?error=true") // Nếu thất bại sẽ quay lại đây
+                        .defaultSuccessUrl("/home", true) 
+                        .failureUrl("/login?error=true") 
                         .permitAll())
 
                 .logout(logout -> logout.logoutSuccessUrl("/login"));
