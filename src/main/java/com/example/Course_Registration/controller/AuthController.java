@@ -17,20 +17,18 @@ public class AuthController {
 
     @GetMapping("/register")
     public String showRegistrationForm() {
-        return "register"; // Trả về file register.html
+        return "register"; 
     }
 
     @Autowired
-    private PasswordEncoder passwordEncoder; // Tiêm Encoder vào đây
+    private PasswordEncoder passwordEncoder; 
 
     @PostMapping("/register/save")
     public String registration(@RequestParam("username") String username,
             @RequestParam("password") String password) {
 
-        // Mã hóa mật khẩu trước khi lưu
         String encodedPassword = passwordEncoder.encode(password);
 
-        // Lưu encodedPassword này vào Database thay vì password thuần
         System.out.println("Mật khẩu sau khi mã hóa để lưu DB: " + encodedPassword);
 
         return "redirect:/login";
